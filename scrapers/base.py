@@ -10,7 +10,7 @@ class BaseScraper:
 
     def scrape(self):
         try:
-            html = requests.get(self.website).content
+            html = requests.get(self.website).text
             soup = BeautifulSoup(html, 'html.parser')
             df = []
             for sentence in soup.find_all('p'):
