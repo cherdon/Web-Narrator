@@ -1,3 +1,4 @@
+import util
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,7 +16,8 @@ class BaseScraper:
             df = []
             for sentence in soup.find_all('p'):
                 df.append(sentence.get_text())
-            return df
+            article = util.article(df)
+            return article
 
         except Exception as e:
             return e

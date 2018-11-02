@@ -1,13 +1,15 @@
 from scrapers.base import BaseScraper
-from scrapers.STNews import STNews
+from scrapers.STNews import STNewsScraper
+from scrapers.Noba import NobaScraper
 
 scrapers_list = {
-    "straitstimes": STNews
+    "straitstimes": STNewsScraper,
+    "nobaproject": NobaScraper
 }
 
 def get_source(website):
-    website = website.strip("https://www")
-    source = website.split(".")[1]
+    website = website.strip("https://www.")
+    source = website.split(".")[0]
     return source
 
 def get_scraper(source):
@@ -17,6 +19,10 @@ def get_scraper(source):
         scraper = BaseScraper
     return scraper
 
-
-# format of update
-# {'update_id': 211750268, 'message': {'message_id': 2, 'from': {'id': 99456745, 'is_bot': False, 'first_name': 'Cher Don 🐶', 'username': 'Cherdon', 'language_code': 'en-US'}, 'chat': {'id': 99456745, 'first_name': 'Cher Don 🐶', 'username': 'Cherdon', 'type': 'private'}, 'date': 1541048109, 'text': 'Hello!'}}
+class article:
+    def __init__(self, content, headline=None, author=None, introduction=None, conclusion=None):
+        self.headline = headline
+        self.content = content
+        self.author = author
+        self.intro = introduction
+        self.conclusion = conclusion
