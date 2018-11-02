@@ -16,3 +16,7 @@ def get_scraper(source):
     else:
         scraper = BaseScraper
     return scraper
+
+
+# format of update
+# {'update_id': 211750268, 'message': {'message_id': 2, 'from': {'id': 99456745, 'is_bot': False, 'first_name': 'Cher Don 🐶', 'username': 'Cherdon', 'language_code': 'en-US'}, 'chat': {'id': 99456745, 'first_name': 'Cher Don 🐶', 'username': 'Cherdon', 'type': 'private'}, 'date': 1541048109, 'text': 'Hello!'}}
