@@ -1,11 +1,12 @@
+import os
 import util
 from gtts import gTTS
 import winsound
-
+chrome_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'driver', 'chromedriver'))
 
 # generate an article based on the scraper and website given
-def fill_article_class(model, website):
-    scraper = model(website)
+def fill_article_class(model, website, driver):
+    scraper = model(website, driver)
     article = scraper.run()
     return article
 
@@ -26,8 +27,7 @@ def generate_content(article):
     return final_text
 
 # generate audio object
-def get_audio(model, website, language='en'):
-    article = fill_article_class(model, website)
+def get_audio(article, language='en'):
     text = generate_content(article)
     speech_obj = gTTS(text=text, lang=language, slow=False)
     return speech_obj
@@ -38,18 +38,19 @@ def main():
 
     # find out the source of the website and if it has a specific scraper for it
     source = util.get_source(website)
-    print(source)
     scraper = util.get_scraper(source)
+    driver = util.init_driver(chrome_path)
 
     # create article attributes based on the content scraped
-    article = fill_article_class(scraper, website)
+    article = fill_article_class(scraper, website, driver)
+    print(article.headline)
     print(generate_content(article))
 
-    # # parse to get the audio version
-    # audio = get_audio(scraper, website, 'en')
-    # audio.save('test.mp3')
-    #
-    # winsound.PlaySound('test.mp3', winsound.SND_FILENAME | winsound.SND_ASYNC)
+    # parse to get the audio version
+    audio = get_audio(article, 'en')
+    audio.save('test.mp3')
+
+    winsound.PlaySound('test.mp3', winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 if __name__ == "__main__":
     main()

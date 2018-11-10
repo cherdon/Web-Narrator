@@ -1,3 +1,4 @@
+from selenium import webdriver
 from scrapers.base import BaseScraper
 from scrapers.STNews import STNewsScraper
 from scrapers.Noba import NobaScraper
@@ -26,3 +27,13 @@ class article:
         self.author = author
         self.intro = introduction
         self.conclusion = conclusion
+
+def init_driver(chromepath):
+    options = webdriver.ChromeOptions()
+    options.add_argument('chrome_headless')
+    options.add_argument('window-size=1200x2400')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-setuid-sandbox')
+    options.add_argument('--incognito')
+    driver = webdriver.Chrome(executable_path=chromepath, chrome_options=options)
+    return driver
